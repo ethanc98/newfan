@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -190,7 +194,8 @@ app.get('/callback', async (req, res) => {
         const getToken = await fetch(`https://accounts.spotify.com/api/token`, {
             method: 'POST',
             headers: {
-                'Authorization' : 'Basic ' + btoa(process.env.clientId + ':' + process.env.clientSecret),
+                // 'Authorization' : 'Basic ' + btoa(process.env.clientId + ':' + process.env.clientSecret),
+                'Authorization' : 'Basic ' + Buffer.from(process.env.clientId + ':' + process.env.clientSecret, 'binary').toString('base64'),
                 'Content-Type' : 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({
