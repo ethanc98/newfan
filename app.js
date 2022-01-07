@@ -8,7 +8,6 @@ const querystring = require('query-string');
 
 
 const scope = 'playlist-modify-private';
-const redirect_uri = 'http://localhost:3000/callback';
 
 
 const app = express();
@@ -168,7 +167,7 @@ app.get('/spotify', (req, res) => {
                 show_dialog: true,
                 client_id: process.env.clientId,
                 scope: scope,
-                redirect_uri: redirect_uri,
+                redirect_uri: process.env.redirect_uri,
                 state: state
             }));
             
@@ -196,7 +195,7 @@ app.get('/callback', async (req, res) => {
             },
             body: new URLSearchParams({
                 code: code,
-                redirect_uri: redirect_uri,
+                redirect_uri: process.env.redirect_uri,
                 grant_type: 'authorization_code'
             })
         });   
