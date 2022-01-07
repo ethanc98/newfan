@@ -6,8 +6,7 @@ const ejs = require('ejs');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const querystring = require('query-string');
 
-const clientId = 'cf7de4e2b7f84cf6bdee6e7f357d68e0';
-const clientSecret = '02d18ebaaa5a4fd89afba514efb92c9e';
+
 const scope = 'playlist-modify-private';
 const redirect_uri = 'http://localhost:3000/callback';
 
@@ -167,7 +166,7 @@ app.get('/spotify', (req, res) => {
             querystring.stringify({
                 response_type: 'code',
                 show_dialog: true,
-                client_id: clientId,
+                client_id: process.env.clientId,
                 scope: scope,
                 redirect_uri: redirect_uri,
                 state: state
@@ -192,7 +191,7 @@ app.get('/callback', async (req, res) => {
         const getToken = await fetch(`https://accounts.spotify.com/api/token`, {
             method: 'POST',
             headers: {
-                'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret),
+                'Authorization' : 'Basic ' + btoa(process.env.clientId + ':' + process.env.clientSecret),
                 'Content-Type' : 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({
@@ -335,7 +334,7 @@ function handleErrors(response) {
 }
 
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`listening on port ${port}`)
 })
