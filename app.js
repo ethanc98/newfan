@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
-const session = require('express-session');
+const session = require('cookie-session');
 app.use(session({secret: 'mySecret', resave: false, saveUninitialized: false}));
 
 function sleep(ms) {
