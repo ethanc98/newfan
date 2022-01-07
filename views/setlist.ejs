@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setlist</title>
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <%- include('./partials/header') %>
+    <div class="main__container">
+
+    <h1 class="header-artist"></h1>
+    <h2 class="header-place"></h2>
+    <h2 class="header-date"></h2>
+    <div class="setlist"></div>
+    
+    <form action="/spotify" method="POST" class="form">
+        <input class="input" type="hidden" name="setlistNum" value="">
+        <button class="button-create">CREATE PLAYLIST</button>
+    </form>
+
+        <!-- <button class="return">return</button> -->
+    </div>
+    <%- include('./partials/footer') %>
+
+    <script>
+        window.onload = function() {
+
+        document.querySelector('.header-artist').innerHTML = localStorage.getItem('artist');
+        document.querySelector('.header-place').innerHTML = localStorage.getItem('place');
+        document.querySelector('.header-date').innerHTML = localStorage.getItem('date').replace(/-/g,' ');
+        document.querySelector('.input').value = localStorage.getItem('setlistNum');
+
+        const gig = JSON.parse(localStorage.getItem('gig'));
+        console.log(gig.length);
+        for (let i = 0; i < gig.length; i++) {
+            console.log(gig[i])
+            document.querySelector('.setlist').innerHTML += `<p>${gig[i].name}</p>`;  
+        }
+    }
+
+    // document.querySelector('.return').addEventListener('click', () => {
+    //     history.back();
+    // })
+        
+    </script>
+</body>
+</html>

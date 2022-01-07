@@ -1,0 +1,157 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    cursor: pointer;
+}
+header {
+    display: flex;
+    justify-content: center;
+    height: 80px;
+    /* width: 100vw; */
+    background-color: #000;
+    padding: 0;
+    margin: 0;
+}
+
+footer {
+    height: 80px;
+}
+
+.header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 1140px;
+}
+
+.input__artist {
+    font-weight: 500;
+}
+
+svg {
+    fill: #fff;
+    height: 42px;
+    display: flex;
+    align-items: center;
+}
+
+img {
+    height: 20px;
+}
+
+.main__container {
+    /* width: 1200px; */
+    width: 950px;
+    /* border: solid 1px green; */
+}
+
+input {
+    margin-top: 10vh;
+    border: none;
+    width: 100%;
+    color: #fff;
+    background: transparent;
+    font-size: 7rem;
+}
+input:focus {
+    outline: none;
+}
+
+.artists {
+    margin-top: 10vh;
+    width: 100%;
+}
+.artist button {
+    font-size: 7rem;
+    color: #777;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-weight: 500;
+
+    /* white-space: nowrap; */
+
+}
+.artist button:hover {
+    color: #fff;
+}
+.gigs {
+    margin-top: 10vh;
+    width: 100%;
+}
+.set button {
+    font-size: 2.5rem;
+    color: #777;
+    background: transparent;
+    border: none;
+    margin-bottom: 8vh;
+    text-align: left;
+}
+.set button:hover {
+    color: #fff;
+}
+
+.header-place {
+    margin-top: 10px;
+}
+.header-date {
+    margin-top: 10px;
+}
+
+.setlist {
+    margin-top: 20px;
+}
+
+p {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+}
+
+.button-create {
+    width: 254px;
+    height: 48px;
+    border-radius: 25px;
+    border: none;
+    color: #fff;
+    /* background-color: #1db954; */
+    background-color: #222326;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.12rem;
+    margin-top: 20px;
+    font-family: 'Montserrat', sans-serif;
+    /* font-family: sans-serif; */
+}
+.button-create:hover {
+    color: #1db954;
+}
+
+.message {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    height: max-content;
+    width: max-content;
+}
