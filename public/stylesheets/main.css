@@ -7,6 +7,7 @@
 
 body {
     background-color: #000;
+    /* width: 100vw; */
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -20,7 +21,7 @@ header {
     display: flex;
     justify-content: center;
     height: 80px;
-    /* width: 100vw; */
+    max-width: 100vw;
     background-color: #000;
     padding: 0;
     margin: 0;
@@ -37,9 +38,21 @@ footer {
     height: 100%;
     width: 1140px;
 }
+@media (max-width: 1140px) {
+    .header__container {
+        margin-left: 35px;
+    }
+    .main__container {
+        margin-left: 20px;
+    }
+    .input__artist {
+        font-size: 5rem;
+    }
+}
 
 .input__artist {
     font-weight: 500;
+    
 }
 
 svg {
@@ -56,6 +69,7 @@ img {
 .main__container {
     /* width: 1200px; */
     width: 950px;
+    max-width: 100vw;
     /* border: solid 1px green; */
 }
 
