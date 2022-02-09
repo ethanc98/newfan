@@ -39,6 +39,11 @@ app.get('/', (req, res) => {
 
 });
 
+app.get('/search', (req, res) => {
+    res.render('search');
+
+});
+
 app.post('/search', async (req, res) => {
     const time = new Date().toTimeString().split(" ")[0];
     console.log(`api request (/search) ${time}`);
@@ -59,15 +64,14 @@ app.post('/search', async (req, res) => {
     });
     } catch (e) {console.log(e)}
 
-        // delay to accomodate 2-req p/s api limit
-        await sleep(1000);
     });
 
 
 app.post('/gigs', async (req, res) => {
-    const time = new Date().toTimeString().split(" ")[0];
-    console.log(`api request (/gigs) ${time}`);
-    // uses 'mbid' to grab artists most recent setlist
+    // delay to accomodate 2-req p/s api limit
+    await sleep(1000);
+
+    // uses 'mbid' to grab artists most recent setlists
         const setlists = await fetch(`https://api.setlist.fm/rest/1.0/artist/${req.body.artistMbid}/setlists?p=1`, {
             method: 'GET',
             headers: {
@@ -76,14 +80,13 @@ app.post('/gigs', async (req, res) => {
             }
         });
         const fm = await setlists.json();
-        // console.log(fm.setlist[0].sets.set[0].song);
 
         const stringified = JSON.stringify(fm);
 
-        if  (stringified.includes('Too Many Requests')) {
 
+        if  (stringified.includes('Too Many Requests')) {
             console.log(`${stringified} had too many requests`);
-            return res.render('error');
+            return ;
         }
         gig = fm;
         return res.render('gigs', {
@@ -93,55 +96,6 @@ app.post('/gigs', async (req, res) => {
 });
 
 
-
-// app.get('/callback2', async (req, res) => {
-//     // const setlistNum = req.session.setlistNum;
-
-
-//     const code = req.query.code || null;
-//     const state = req.query.state || null;
-    
-//     if (state === null) {
-//       res.redirect('/#' +
-//         querystring.stringify({
-//           error: 'state_mismatch'
-//         }));
-//     } else {
-//         const getToken = await fetch(`https://accounts.spotify.com/api/token`, {
-//             method: 'POST',
-//             headers: {
-//                 'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret),
-//                 'Content-Type' : 'application/x-www-form-urlencoded'
-//             },
-//             body: new URLSearchParams({
-//                 code: code,
-//                 redirect_uri: redirect_uri,
-//                 grant_type: 'authorization_code'
-//             })
-//         });   
-//         const data = await getToken.json();
-//         // console.log(data.access_token);
-//         let track = 'Get Back';
-//         let artist = 'The Beatles';
-
-//         let string = "Ain't Your Right";
-//         // string = string.replace("'","");
-//             // const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=track%3A${gig.setlist[setlistNum].sets.set[0].song[i].name}+artist%3A${gig.setlist[setlistNum].artist.name}&type=track&limit=5`, {
-//             // const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=track%3A${string}+artist%3ASky Ferreira&type=track&limit=5`, {
-//             const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=artist%3A${artist}+track%3A${track}&type=track&limit=5`, {
-//             // const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=artist%3AArctic Monkeys+track%3ADancing Shoes&type=track&limit=5`, {
-//                         method: 'GET',
-//                         headers: {
-//                             'Authorization' : 'Bearer ' + data.access_token,
-//                             'Content-Type' : 'application/json'
-//                         },
-//                         json: true
-//                     });
-
-//         const result = await getTrackIds.json();
-//         return console.log(result.tracks);
-//                 }
-// });
 
 app.get('/final', (req, res) => {
     res.send(req.body);
@@ -179,9 +133,6 @@ app.get('/callback', async (req, res) => {
 
     const setlistNum = req.session.setlistNum;
 
-    // console.log(`song: ${gig.setlist[setlistNum].sets.set[0].song[0].name}`)
-    // console.log(`artist: ${gig.setlist[setlistNum].artist.name}`)
-
     const code = req.query.code || null;
     const state = req.query.state || null;
     
@@ -215,8 +166,6 @@ app.get('/callback', async (req, res) => {
             json: true
         });      
         const userData = await getUser.json();
-        console.log(`userData:`);
-        console.log(userData.id);
 
         const createPlaylist = await fetch(`https://api.spotify.com/v1/users/${userData.id}/playlists`, {
             method: 'POST',
@@ -232,16 +181,11 @@ app.get('/callback', async (req, res) => {
             json: true
         });      
         const playlist = await createPlaylist.json();
-        // return console.log(playlist.id);
 
         for (let i = 0; i < gig.setlist[setlistNum].sets.set[0].song.length; i++) {
 
-            // console.log(gig.setlist[setlistNum].sets.set[0].song[i].name);
-            // console.log(gig.setlist[setlistNum].sets.set[0].song[i].name);
-            // console.log(`${gig.setlist[setlistNum].artist.name}+${gig.setlist[setlistNum].sets.set[0].song[i].name}`);
 
             if (gig.setlist[setlistNum].sets.set[0].song[i].cover) {
-                gig.setlist[setlistNum].sets.set[0].song[i].cover.name = gig.setlist[setlistNum].sets.set[0].song[i].cover.name.replace("'","");
 
                 const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=artist%3A${gig.setlist[setlistNum].sets.set[0].song[i].cover.name}+track%3A${gig.setlist[setlistNum].sets.set[0].song[i].name}&type=track&limit=5`, {
 
@@ -254,7 +198,7 @@ app.get('/callback', async (req, res) => {
                     });
                     const result = await getTrackIds.json();
 
-            // skips track if not found
+            // skips track if not found in search
             if (result.tracks.items[0] == undefined) {continue}
         
             const addTracks = await fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
@@ -267,17 +211,11 @@ app.get('/callback', async (req, res) => {
                 uris: [`${result.tracks.items[0].uri}`]
                 }),
                 json: true
-            });
-
-        //     console.log(`${gig.setlist[setlistNum].sets.set[0].song[i].cover.name}+${gig.setlist[setlistNum].sets.set[0].song[i].name}`);
-        //     console.log(result.tracks.items);
-        // console.log(result.tracks.items[0].id);
-        // console.log('/////////////////////////////////////////////////////////////////////////////////////////');
+            }); 
         
             } else {
-                gig.setlist[setlistNum].sets.set[0].song[i].name = gig.setlist[setlistNum].sets.set[0].song[i].name.replace("'","");
 
-                // const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=track%3A${gig.setlist[setlistNum].sets.set[0].song[i].name}+artist%3A${gig.setlist[setlistNum].artist.name}&type=track&limit=1`, {
+
             const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=artist%3A${gig.setlist[setlistNum].artist.name}+track%3A${gig.setlist[setlistNum].sets.set[0].song[i].name}&type=track&limit=5`, {
 
                         method: 'GET',
@@ -289,7 +227,8 @@ app.get('/callback', async (req, res) => {
                     });
                     const result = await getTrackIds.json();
 
-            // skips track if not found
+
+            // skips track if not found in search
             if (result.tracks.items[0] == undefined) {continue}
         
             const addTracks = await fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
@@ -303,22 +242,15 @@ app.get('/callback', async (req, res) => {
                 }),
                 json: true
             });
-        //     console.log(`${gig.setlist[setlistNum].artist.name}+${gig.setlist[setlistNum].sets.set[0].song[i].name}`);
-        //     console.log(result.tracks.items);
-        // console.log(result.tracks.items[0].id);
-        // console.log('/////////////////////////////////////////////////////////////////////////////////////////');
+
             }
 
             
         }
-        
-        // console.log(result);
-        // console.log(`////////////////////////////////////////////////////////////`);
-        
 
+    res.render('end', {playlist});
 
     }
-    res.render('spotify');
 });
 
 

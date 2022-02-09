@@ -12,16 +12,16 @@
 </head>
 <body>
     <%- include('./partials/header') %>
-    <div class="main__container">
+    <div class="main__container main__container__setlist">
 
-    <h1 class="header-artist"></h1>
-    <h2 class="header-place"></h2>
-    <h2 class="header-date"></h2>
+    <h1 class="header__sub header__sub__artist"></h1>
+    <h2 class="header__sub header__sub__place"></h2>
+    <h2 class="header__sub header__sub__date"></h2>
     <div class="setlist"></div>
     
-    <form action="/spotify" method="POST" class="form">
+    <form action="/spotify" method="POST" class="form__create">
         <input class="input" type="hidden" name="setlistNum" value="">
-        <button class="button-create">CREATE PLAYLIST</button>
+        <button class="btn btn_dark">CREATE PLAYLIST</button>
     </form>
 
         <!-- <button class="return">return</button> -->
@@ -31,22 +31,21 @@
     <script>
         window.onload = function() {
 
-        document.querySelector('.header-artist').innerHTML = localStorage.getItem('artist');
-        document.querySelector('.header-place').innerHTML = localStorage.getItem('place');
-        document.querySelector('.header-date').innerHTML = localStorage.getItem('date').replace(/-/g,' ');
-        document.querySelector('.input').value = localStorage.getItem('setlistNum');
+            document.querySelector('.header__sub__artist').innerHTML = localStorage.getItem('artist');
+            document.querySelector('.header__sub__place').innerHTML = localStorage.getItem('place');
+            document.querySelector('.header__sub__date').innerHTML = localStorage.getItem('date').replace(/-/g,' ');
+            document.querySelector('.input').value = localStorage.getItem('setlistNum');
 
-        const gig = JSON.parse(localStorage.getItem('gig'));
-        console.log(gig.length);
-        for (let i = 0; i < gig.length; i++) {
-            console.log(gig[i])
-            document.querySelector('.setlist').innerHTML += `<p>${gig[i].name}</p>`;  
+            const gig = JSON.parse(localStorage.getItem('gig'));
+
+            for (let i = 0; i < gig.length; i++) {
+                if (gig[i].cover) {
+                    document.querySelector('.setlist').innerHTML += `<p class="song-name">${gig[i].name} (Cover) .${i+1}</p>`;
+                } else {
+                    document.querySelector('.setlist').innerHTML += `<p class="song-name">${gig[i].name} .${i+1}</p>`;  
+                }
+            }
         }
-    }
-
-    // document.querySelector('.return').addEventListener('click', () => {
-    //     history.back();
-    // })
         
     </script>
 </body>

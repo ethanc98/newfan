@@ -1,92 +1,107 @@
+html {
+    /* overflow-x: hidden; */
+    overflow-y: scroll;
+}
+
 * {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
     font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
 }
 
 body {
     background-color: #000;
-    /* width: 100vw; */
     color: #fff;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center;   
 }
 
-button {
+.btn {
     cursor: pointer;
+    border: none;
 }
-header {
+
+.navbar {
+    position: absolute;
+    top: 0;
     display: flex;
     justify-content: center;
     height: 80px;
     max-width: 100vw;
-    background-color: #000;
     padding: 0;
     margin: 0;
+    z-index: 2;
+}
+
+.newfan-logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.1rem 0.4rem;
+    background: #FC354C;
 }
 
 footer {
     height: 80px;
 }
 
-.header__container {
+.header__sub {
+    margin-top: 10px;
+}
+
+.navbar__container {
+    
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 100%;
     width: 1140px;
 }
-@media (max-width: 1140px) {
-    .header__container {
-        margin-left: 35px;
-    }
-    .main__container {
-        margin-left: 20px;
-    }
-    .input__artist {
-        font-size: 5rem;
-    }
-}
 
-.input__artist {
-    font-weight: 500;
-    
-}
 
-svg {
+
+.spotify-logo {
     fill: #fff;
-    height: 42px;
+    height: 24px;
     display: flex;
     align-items: center;
 }
 
-img {
-    height: 20px;
-}
-
 .main__container {
-    /* width: 1200px; */
     width: 950px;
     max-width: 100vw;
-    /* border: solid 1px green; */
+    margin: 80px auto 0;
 }
 
-input {
-    margin-top: 10vh;
+
+
+
+
+
+/* search page */
+.input__artist {
+    margin-top: 5rem;
     border: none;
     width: 100%;
     color: #fff;
     background: transparent;
     font-size: 7rem;
+    font-weight: 500;
 }
-input:focus {
+.input__artist {
     outline: none;
 }
 
+
+
+
+/* artist list page */
 .artists {
-    margin-top: 10vh;
+    margin-top: 6vh;
     width: 100%;
 }
 .artist button {
@@ -96,18 +111,20 @@ input:focus {
     border: none;
     text-align: left;
     font-weight: 500;
-
-    /* white-space: nowrap; */
-
 }
+
 .artist button:hover {
     color: #fff;
 }
+
+
+
+/* gig list page */
 .gigs {
     margin-top: 10vh;
     width: 100%;
 }
-.set button {
+.set__btn {
     font-size: 2.5rem;
     color: #777;
     background: transparent;
@@ -115,57 +132,123 @@ input:focus {
     margin-bottom: 8vh;
     text-align: left;
 }
-.set button:hover {
+.set__btn:hover {
     color: #fff;
 }
 
-.header-place {
-    margin-top: 10px;
-}
-.header-date {
-    margin-top: 10px;
-}
 
+
+/* setlist page */
 .setlist {
-    margin-top: 20px;
+    margin-top: 5rem;
 }
 
-p {
+.song-name {
     margin-top: 10px;
     text-align: right;
 }
 
-.form {
+.form__create {
     display: flex;
     justify-content: center;
 }
 
-.button-create {
+.btn_dark {
     width: 254px;
     height: 48px;
     border-radius: 25px;
-    border: none;
     color: #fff;
-    /* background-color: #1db954; */
     background-color: #222326;
     font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0.12rem;
-    margin-top: 20px;
+    margin-top: 5rem;
     font-family: 'Montserrat', sans-serif;
-    /* font-family: sans-serif; */
 }
-.button-create:hover {
+
+.btn_dark:hover {
     color: #1db954;
 }
 
-.message {
+
+
+
+/* end page */
+.end__container {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    top: 0;right: 0;bottom: 0;left: 0;
     margin: auto;
     height: max-content;
     width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.btn__href {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+@media (max-width: 1140px) {
+    .navbar {
+        width: 85%;
+    }
+    .main__container__search {
+        padding-left: 1.5rem;
+    }
+    .main__container__artists {
+        padding-left: 6rem;
+    }
+    .main__container__gigs {
+        padding: 0 3rem;
+    }
+
+    .input__artist {
+        font-size: 3rem;
+    }
+    .artist button {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    .set button {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    .set button {
+        font-size: 2.5rem;
+    }
+    .main__container__setlist {
+        padding: 0 2rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .main__container__artists {
+        padding-left: 5rem;
+    }
+    .artist button {
+        font-size: 2.5rem;
+    }
+    .set button {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 450px) {
+    .main__container__artists {
+        padding-left: 1rem;
+    }
+    .artist button {
+        font-size: 1.5rem;
+    }
+    .main__container__gigs {
+        padding: 0 1.5rem;
+    }
+    .set button {
+        font-size: 1.5rem;
+    }
 }

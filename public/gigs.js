@@ -1,17 +1,14 @@
 const artist = document.querySelector('.artist');
 const gigs = document.querySelector('.gigs');
 
-// artist.innerHTML = `${fm.setlist[0].artist.name} gigs`
-
 
 for (let i = 0; i < fm.setlist.length; i++) {
-    gigs.innerHTML += `<div class="set set-${i+1}"><button class="btn btn${i}" value="${i}">${fm.setlist[i].venue.name}, ${fm.setlist[i].venue.city.name}, ${fm.setlist[i].venue.city.state} ${fm.setlist[i].eventDate.replace(/-/g,' ')}</button></div>`
+    gigs.innerHTML += `<div class="set set-${i+1}"><button class="btn set__btn btn${i}" value="${i}">${fm.setlist[i].venue.name}, ${fm.setlist[i].venue.city.name}, ${fm.setlist[i].venue.city.state} ${fm.setlist[i].eventDate.replace(/-/g,' ')}</button></div>`
 }
     
 
 gigs.onclick = async (e) => {
     if (e.target.tagName !== 'BUTTON') {
-        console.log('Something else clicked...');
         return;
     }
     const target = e.target.value;
