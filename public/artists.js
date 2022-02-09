@@ -8,7 +8,7 @@ for (let i = 0; i < 10; i++) {
     <form action="/gigs" method="POST">
     <input type="hidden" value="${fm.artist[i].mbid}" name="artistMbid">
 
-    <button>${fm.artist[i].name}</button>
+    <button class="btn">${fm.artist[i].name}</button>
 
     </form>
     </div>`
