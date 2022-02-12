@@ -25,7 +25,7 @@ app.use(session({secret: 'mySecret', resave: false, saveUninitialized: false}));
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}
 function randomStringGenerator() {
     return (Math.random() + 1).toString(36).substring(2);
 }
