@@ -46,13 +46,12 @@ app.get('/search', (req, res) => {
 
 app.post('/search', async (req, res) => {
     const time = new Date().toTimeString().split(" ")[0];
-    console.log(`api request (/search) ${time}`);
     try {
     // grabs artists 'mbid' key
     const artistKey = await fetch(`https://api.setlist.fm/rest/1.0/search/artists?artistName=${req.body.input}&p=1&sort=relevance`, {
             method: 'GET',
             headers: {
-                'x-api-key' : 'wP7CY7Rok_VdYFR9jh9e15vKdurrWwMiTCM8',
+                'x-api-key' : process.env.setlistfmKey,
                 'Accept' : 'application/json',
             }
         });
@@ -75,7 +74,7 @@ app.post('/gigs', async (req, res) => {
         const setlists = await fetch(`https://api.setlist.fm/rest/1.0/artist/${req.body.artistMbid}/setlists?p=1`, {
             method: 'GET',
             headers: {
-                'x-api-key' : 'wP7CY7Rok_VdYFR9jh9e15vKdurrWwMiTCM8',
+                'x-api-key' : process.env.setlistfmKey,
                 'Accept' : 'application/json',
             }
         });
@@ -256,17 +255,6 @@ app.get('/callback', async (req, res) => {
 
     
 });
-
-
-
-
-
-function handleErrors(response) {
-    if (!response.ok) {
-        throw Error(response.statusText);
-    }
-    return response;
-}
 
 
 const port = process.env.PORT || 3000;

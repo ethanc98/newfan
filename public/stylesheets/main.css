@@ -10,13 +10,13 @@ html {
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
 }
-
 body {
     background-color: #000;
     color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;   
+    min-height: 100vh;
 }
 
 .btn {
@@ -24,6 +24,7 @@ body {
     border: none;
 }
 
+/* header */
 .navbar {
     position: absolute;
     top: 0;
@@ -35,6 +36,13 @@ body {
     margin: 0;
     z-index: 2;
 }
+.navbar__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 1140px;
+}
 
 .newfan-logo {
     font-size: 24px;
@@ -44,32 +52,34 @@ body {
     padding: 0.1rem 0.4rem;
     background: #FC354C;
 }
-
-footer {
-    height: 80px;
-}
-
-.header__sub {
-    margin-top: 10px;
-}
-
-.navbar__container {
-    
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-    width: 1140px;
-}
-
-
-
 .spotify-logo {
     fill: #fff;
     height: 24px;
     display: flex;
     align-items: center;
 }
+
+
+/* footer */
+footer {
+    height: 100px;
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.attribution__header {
+    font-size: 1rem;
+    font-weight: 400;
+    padding-bottom: 1rem;
+}
+
+
+.header__sub {
+    margin-top: 10px;
+}
+
+
 
 .main__container {
     width: 950px;
@@ -112,7 +122,6 @@ footer {
     text-align: left;
     font-weight: 500;
 }
-
 .artist button:hover {
     color: #fff;
 }

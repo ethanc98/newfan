@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify</title>
+    <title>End | newfan</title>
     <link rel="stylesheet" href="stylesheets/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -13,18 +13,11 @@
 <body>
     <%- include('./partials/header') %>
     <div class="main__container main__container__end">
-        <!-- <div class="end__container"> -->
-            <h1 class="message">We've created your playlist, go check it out!</h1>
-            <!-- <button class="btn btn__create">Open Spotify
-                <a class="nested-href" href="https://open.spotify.com/playlist/<%= playlist.id %>"></a>
-            </button>     -->
+            <h2 class="message">We've created your playlist, go check it out!</h2>
 
             <a class="btn btn__href btn_dark" href="https://open.spotify.com/playlist/<%= playlist.id %>">OPEN SPOTIFY</a>
 
-        <!-- </div> -->
-
     </div>
-    <%- include('./partials/footer') %>
 
 </body>
 </html>
