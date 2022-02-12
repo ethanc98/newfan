@@ -4,30 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
+    <title>Search | newfan</title>
     <link rel="stylesheet" href="stylesheets/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 <body>
-    <!-- <img src="images/Spotify_Logo_RGB_White.eps" alt=""> -->
-    <!-- <img src="../nightSky.png" alt=""> -->
     
-        <%- include('./partials/header') %>
+    <%- include('./partials/header') %>
+    
     <div class="main__container main__container__search">
-        <!-- <h1>Test</h1> -->
 
-    <form action="/search" method="POST">
-            <!-- <label for="input">Type artist:</label> -->
+        <form action="/search" method="POST">
             <input class="input__artist" id="input" type="type" autocomplete="off" spellcheck="false" placeholder="artist" value="" name="input" autofocus>
-
-            <!-- <button>Submit</button> -->
+        </form>
         
-    </form>
     </div>
     
-    <%- include('./partials/footer') %>
-
-    <script src="main.js"></script>
 </body>
 </html>
