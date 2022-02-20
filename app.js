@@ -251,11 +251,11 @@ app.get('/callback', async (req, res) => {
     }
 });
 
-
-
-    
 });
 
+app.all('*', (req, res, next) => {
+    res.redirect('/')
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
