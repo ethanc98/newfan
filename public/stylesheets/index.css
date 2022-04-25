@@ -1,12 +1,10 @@
 body {
     overflow: overlay;
     overflow-x: hidden;
-
 }
 
 .page__1 {
     position: relative;
-
 }
 
 .wrapper {
@@ -70,7 +68,6 @@ body {
    transition: 0.5s;
    background-size: 200% auto;
    border-radius: 50px;
-   /* display: block; */
  }
  .btn__start {
      color: #fff;

@@ -30,7 +30,7 @@ function randomStringGenerator() {
     return (Math.random() + 1).toString(36).substring(2);
 }
 
-let gig = ''
+let gig = '';
   
 
 
@@ -116,9 +116,10 @@ app.post('/spotify', (req, res) => {
 })
 
 app.get('/spotify', (req, res) => {
-        const state = randomStringGenerator();
+
+    const state = randomStringGenerator();
     
-        res.redirect('https://accounts.spotify.com/authorize?' +
+    res.redirect('https://accounts.spotify.com/authorize?' +
             querystring.stringify({
                 response_type: 'code',
                 show_dialog: true,
@@ -127,131 +128,114 @@ app.get('/spotify', (req, res) => {
                 redirect_uri: process.env.redirect_uri,
                 state: state
             }));
-            
-app.get('/callback', async (req, res) => {
 
-    const setlistNum = req.session.setlistNum;
-
-    const code = req.query.code || null;
-    const state = req.query.state || null;
     
-    if (state === null) {
-      res.redirect('/#' +
-        querystring.stringify({
-          error: 'state_mismatch'
-        }));
-    } else {
-        const getToken = await fetch(`https://accounts.spotify.com/api/token`, {
-            method: 'POST',
-            headers: {
-                'Authorization' : 'Basic ' + Buffer.from(process.env.clientId + ':' + process.env.clientSecret, 'binary').toString('base64'),
-                'Content-Type' : 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                code: code,
-                redirect_uri: process.env.redirect_uri,
-                grant_type: 'authorization_code'
-            })
-        });   
-        const data = await getToken.json();
+});
 
-        const getUser = await fetch(`https://api.spotify.com/v1/me`, {
-            method: 'GET',
-            headers: {
-                'Authorization' : 'Bearer ' + data.access_token,
-                'Content-Type' : 'application/json'
-            },
-            json: true
-        });      
-        const userData = await getUser.json();
+app.get('/callback', async (req, res) => {
+        const setlistNum = req.session.setlistNum;
+        const code = req.query.code || null;
+        const state = req.query.state || null;
 
-        const createPlaylist = await fetch(`https://api.spotify.com/v1/users/${userData.id}/playlists`, {
-            method: 'POST',
-            headers: {
-                'Authorization' : 'Bearer ' + data.access_token,
-                'Content-Type' : 'application/json'
-            },
-            body: JSON.stringify({
-                name: `${gig.setlist[setlistNum].artist.name} (${gig.setlist[setlistNum].venue.name}, ${gig.setlist[setlistNum].venue.city.state})`,
-                description: gig.setlist[setlistNum].eventDate,
-                public: false
-            }),
-            json: true
-        });      
-        const playlist = await createPlaylist.json();
+        if (state === null) {
+        res.redirect('/#' +
+            querystring.stringify({
+            error: 'state_mismatch'
+            }));
+        } else {
+            const getToken = await fetch(`https://accounts.spotify.com/api/token`, {
+                method: 'POST',
+                headers: {
+                    'Authorization' : 'Basic ' + Buffer.from(process.env.clientId + ':' + process.env.clientSecret, 'binary').toString('base64'),
+                    'Content-Type' : 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    code: code,
+                    redirect_uri: process.env.redirect_uri,
+                    grant_type: 'authorization_code'
+                })
+            });   
+            const data = await getToken.json();
 
-        for (let i = 0; i < gig.setlist[setlistNum].sets.set[0].song.length; i++) {
+            const getUser = await fetch(`https://api.spotify.com/v1/me`, {
+                method: 'GET',
+                headers: {
+                    'Authorization' : 'Bearer ' + data.access_token,
+                    'Content-Type' : 'application/json'
+                },
+                json: true
+            });      
+            const userData = await getUser.json();
 
-
-            if (gig.setlist[setlistNum].sets.set[0].song[i].cover) {
-
-                const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=artist%3A${gig.setlist[setlistNum].sets.set[0].song[i].cover.name}+track%3A${gig.setlist[setlistNum].sets.set[0].song[i].name}&type=track&limit=5`, {
-
-                        method: 'GET',
-                        headers: {
-                            'Authorization' : 'Bearer ' + data.access_token,
-                            'Content-Type' : 'application/json'
-                        },
-                        json: true
-                    });
-                    const result = await getTrackIds.json();
-
-            // skips track if not found in search
-            if (result.tracks.items[0] == undefined) {continue}
-        
-            const addTracks = await fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
+            const createPlaylist = await fetch(`https://api.spotify.com/v1/users/${userData.id}/playlists`, {
                 method: 'POST',
                 headers: {
                     'Authorization' : 'Bearer ' + data.access_token,
                     'Content-Type' : 'application/json'
                 },
                 body: JSON.stringify({
-                uris: [`${result.tracks.items[0].uri}`]
+                    name: `${gig.setlist[setlistNum].artist.name} (${gig.setlist[setlistNum].venue.name}, ${gig.setlist[setlistNum].venue.city.state})`,
+                    description: gig.setlist[setlistNum].eventDate,
+                    public: false
                 }),
                 json: true
-            }); 
-        
-            } else {
+            });      
+            const playlist = await createPlaylist.json();
 
+            for (let i = 0; i < gig.setlist[setlistNum].sets.set[0].song.length; i++) {
+                if (gig.setlist[setlistNum].sets.set[0].song[i].cover) {
+                    const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=artist%3A${gig.setlist[setlistNum].sets.set[0].song[i].cover.name}+track%3A${gig.setlist[setlistNum].sets.set[0].song[i].name}&type=track&limit=5`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization' : 'Bearer ' + data.access_token,
+                                'Content-Type' : 'application/json'
+                            },
+                            json: true
+                        });
+                        const result = await getTrackIds.json();
+                
+                // skips track if not found in search
+                if (result.tracks.items[0] == undefined) {continue}
+                const addTracks = await fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization' : 'Bearer ' + data.access_token,
+                        'Content-Type' : 'application/json'
+                    },
+                    body: JSON.stringify({
+                    uris: [`${result.tracks.items[0].uri}`]
+                    }),
+                    json: true
+                }); 
+                } else {
+                const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=artist%3A${gig.setlist[setlistNum].artist.name.replace("#", "")}+track%3A${gig.setlist[setlistNum].sets.set[0].song[i].name.replace("#", "")}&type=track&limit=5`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization' : 'Bearer ' + data.access_token,
+                                'Content-Type' : 'application/json'
+                            },
+                            json: true
+                        });
+                        const result = await getTrackIds.json();
 
-            const getTrackIds = await fetch(`https://api.spotify.com/v1/search?q=artist%3A${gig.setlist[setlistNum].artist.name}+track%3A${gig.setlist[setlistNum].sets.set[0].song[i].name}&type=track&limit=5`, {
-
-                        method: 'GET',
-                        headers: {
-                            'Authorization' : 'Bearer ' + data.access_token,
-                            'Content-Type' : 'application/json'
-                        },
-                        json: true
-                    });
-                    const result = await getTrackIds.json();
-
-
-            // skips track if not found in search
-            if (result.tracks.items[0] == undefined) {continue}
-        
-            const addTracks = await fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
-                method: 'POST',
-                headers: {
-                    'Authorization' : 'Bearer ' + data.access_token,
-                    'Content-Type' : 'application/json'
-                },
-                body: JSON.stringify({
-                uris: [`${result.tracks.items[0].uri}`]
-                }),
-                json: true
-            });
-
+                // skips track if not found in search
+                if (result.tracks.items[0] == undefined) {continue}
+                const addTracks = await fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization' : 'Bearer ' + data.access_token,
+                        'Content-Type' : 'application/json'
+                    },
+                    body: JSON.stringify({
+                    uris: [`${result.tracks.items[0].uri}`]
+                    }),
+                    json: true
+                });
+                }
             }
-
-            
+        res.render('end', {playlist});
         }
-
-    res.render('end', {playlist});
-
-    }
-});
-
-});
+    });
 
 app.all('*', (req, res, next) => {
     res.redirect('/')
