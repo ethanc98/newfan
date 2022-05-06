@@ -45,7 +45,7 @@ app.get('/search', (req, res) => {
 });
 
 app.post('/search', async (req, res) => {
-    const time = new Date().toTimeString().split(" ")[0];
+    // const time = new Date().toTimeString().split(" ")[0];
     try {
     // grabs artists 'mbid' key
     const artistKey = await fetch(`https://api.setlist.fm/rest/1.0/search/artists?artistName=${req.body.input}&p=1&sort=relevance`, {
