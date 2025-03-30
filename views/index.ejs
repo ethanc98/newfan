@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta property="og:image" content="/newfan.jpeg" />
+    <meta property="og:image" content="img/newfan.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>newfan</title>
     <script
@@ -11,7 +11,6 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="stylesheets/main.css" />
-    <link rel="stylesheet" href="stylesheets/index.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -21,45 +20,56 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body class="text-white">
     <%- include('./partials/header') %>
 
-    <section class="page__1">
-      <div class="wrapper">
-        <img
-          class="background-image"
-          src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-          alt=""
-        />
-        <div class="overlay overlay_1"></div>
-      </div>
-
-      <div class="index__container">
-        <h2 class="index__header">
+    <img
+      class="absolute top-0 h-[90vh] w-full object-cover"
+      src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+      alt=""
+    />
+    <div
+      class="absolute top-0 left-0 w-full h-[90vh] bg-gradient-to-b from-[rgba(19,15,48,0.31)] to-[rgba(19,15,48,1)]"
+    ></div>
+    <section class="relative min-h-[calc(90vh-5rem)]">
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 flex flex-col items-center"
+      >
+        <h2 class="text-4xl md:text-6xl lg:text-7xl text-center">
           Create a playlist out of your new favourite artist
         </h2>
-        <a class="btn btn__start" href="/search">Get Started</a>
-        <div class="arrow__container">
-          <i class="arrow fas fa-chevron-down"></i>
+        <a
+          class="px-6 py-4 rounded-full bg-gradient-to-r from-[#FC354C] to-[#0ABFBC] mt-12"
+          href="/builder"
+          >Get Started</a
+        >
+        <div class="mt-20">
+          <i
+            class="text-3xl cursor-pointer fas fa-chevron-down js-arrow-down"
+          ></i>
         </div>
       </div>
     </section>
 
-    <div class="footer">
-      <div class="overlay overlay_2"></div>
+    <section
+      class="relative h-[80vh] lg:h-[90vh] flex justify-center items-center bg-[url('/img/footer-mobile.png')] lg:bg-[url('/img/footer.png')] bg-cover"
+    >
+      <div
+        class="absolute left-0 w-full h-full flex justify-center items-center bg-gradient-to-t from-[rgba(19,15,48,0.31)] to-[rgba(19,15,48,1)]"
+      />
 
-      <div class="footer__container">
-        <h3 class="footer__header">What is newfan?</h3>
-        <p class="footer__text">
-          newfan is a tool for creating Spotify playlists based on archived
-          setlists from real shows. <br />
-          <br />
-          newfan uses the Setlist.fm API to find a list of songs from an artists
-          setlist. That data is then passed to Spotifys API, which is used to
-          create and populate a playlist onto your account.
+      <div class="z-[2] relative lg:w-1/2 lg:ml-auto p-12">
+        <h3 class="text-3xl">What is newfan?</h3>
+        <p class="text-xl mt-8">
+          newfan helps you create Spotify playlists from real concert setlists.
+        </p>
+        <p class="text-xl mt-2">
+          Using the Setlist.fm API, newfan gathers songs from an artist's live
+          performances. This data is then passed to Spotify's API to generate
+          and populate a playlist directly in your account.
         </p>
       </div>
-    </div>
+    </section>
 
     <script src="index.js"></script>
   </body>

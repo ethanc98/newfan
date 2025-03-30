@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Builder | newfan</title>
+    <link rel="stylesheet" href="stylesheets/main.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-black text-white">
+    <%- include('./partials/header') %>
+
+    <div class="px-4">
+      <div class="w-[950px] max-w-full mx-auto my-10 lg:my-20">
+        <form class="js-search-form overflow-hidden">
+          <input
+            class="js-search-input text-6xl lg:text-8xl font-medium bg-transparent border-none outline-none"
+            id="input"
+            type="type"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="artist"
+            value=""
+            name="input"
+            autofocus
+          />
+        </form>
+        <div
+          class="js-results-list flex-col items-start text-2xl lg:text-5xl gap-4 hidden"
+        ></div>
+        <div
+          class="js-selected-setlist-container flex-col items-center gap-2 hidden"
+        >
+          <h1 class="js-selected-artist text-4xl text-center lg:text-left"></h1>
+          <h2 class="js-selected-place text-4xl text-center lg:text-left"></h2>
+          <h2
+            class="js-selected-date text-4xl mb-10 text-center lg:text-left"
+          ></h2>
+          <div
+            class="js-selected-setlist flex flex-col items-center lg:items-end"
+          ></div>
+        </div>
+        <form
+          action="/spotify"
+          method="POST"
+          class="js-create-playlist-form mt-10 justify-center hidden"
+        >
+          <input class="input" type="hidden" name="setlistId" value="" />
+          <button
+            class="bg-[#1db954] text-base text-black rounded-full px-6 py-2 lg:hover:bg-white"
+          >
+            CREATE PLAYLIST
+          </button>
+        </form>
+      </div>
+    </div>
+    <script src="builder.js"></script>
+  </body>
+</html>

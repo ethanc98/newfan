@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>End | newfan</title>
-    <link rel="stylesheet" href="stylesheets/main.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-
-</head>
-<body>
+    <link rel="stylesheet" href="stylesheets/main.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-black text-white">
     <%- include('./partials/header') %>
-    <div class="main__container main__container__end">
-            <h2 class="message">We've created your playlist, go check it out!</h2>
-
-            <a class="btn btn__href btn_dark" href="https://open.spotify.com/playlist/<%= playlist.id %>">OPEN SPOTIFY</a>
-
+    <div class="px-4">
+      <div class="mx-auto my-10 lg:my-20 flex flex-col items-center gap-8">
+        <h2 class="text-3xl text-center">
+          We've created your playlist, go check it out!
+        </h2>
+        <a
+          class="bg-[#1db954] text-base text-black rounded-full px-6 py-2 lg:hover:bg-white"
+          href="https://open.spotify.com/playlist/<%= playlist.id %>"
+          >OPEN SPOTIFY</a
+        >
+      </div>
     </div>
-
-</body>
+  </body>
 </html>
