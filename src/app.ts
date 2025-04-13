@@ -11,16 +11,11 @@ import fetch from 'cross-fetch';
 const scope = 'playlist-modify-private';
 const app = express();
 
-const {
-  clientId,
-  clientSecret,
-  redirect_uri,
-  setlistfmKey,
-  PORT = 3000,
-} = process.env;
+const { clientId, clientSecret, redirect_uri, setlistfmKey, PORT, NODE_ENV } =
+  process.env;
 
 app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -332,6 +327,11 @@ app.all('*', (req: Request, res: Response, next) => {
   res.redirect('/');
 });
 
-app.listen(PORT, () => {
-  console.log(`listening on port http://localhost:${PORT}/`);
-});
+if (NODE_ENV !== 'production') {
+  const port = PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Listening on http://localhost:${port}/`);
+  });
+}
+
+export default app;
